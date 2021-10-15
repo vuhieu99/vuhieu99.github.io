@@ -1,0 +1,39 @@
+Performance differences in languages. Sometimes, classes take advantage of built-in engine optimizations that dynamic compositions don't. Most of the time, this is a much smaller concern than the problems associated with class inheritance, and usually, you can inline everything you need for that performance optimization into a single class and wrap a factory function around it and get the benefits you need without a problematic class hierarchy.
+
+You should never worry about this unless you detect a problem. Then you should profile and test differences in perf to make informed tradeoffs as needed. Often, there are other performance optimizations available that don't involve class inheritance, including tricks like inlining, method delegation, memoizing pure functions, etc... Perf will vary depending on the specific application and language engine. Profiling is essential, here.
+
+Additionally, I've heard lots of common misconceptions. The most common is confusion about type systems:
+
+Conflating types with classes (there are a couple existing answers concentrate on that here already). Compositions can satisfy polymorphism requirements by implementing interfaces. Classes and types are orthogonal, though in most class-supporting languages, subclasses automatically implement the superclass interface, so it can seem convenient.
+
+There are three very good reasons to avoid class inheritance, and the crop up again and again:
+
+The gorilla/banana problem
+
+"I think the lack of reusability comes in object-oriented languages, not functional languages. Because the problem with object-oriented languages is they’ve got all this implicit environment that they carry around with them. You wanted a banana but what you got was a gorilla holding the banana and the entire jungle." ~ Joe Armstrong, quoted in "Coders at Work" by Peter Seibel.
+
+This problem basically refers to the lack of selective code reuse in class inheritance. Composition lets you select just the pieces you need by approaching software design from a "small, reusable parts" approach rather than building monolithic designs that encapsulate everything related to some given functionality.
+
+The fragile base class problem
+
+Class inheritance is the tightest coupling available in object-oriented design, because the base class becomes part of the implementation of the child classes. This is why you'll also hear the advice from the Gang of Four's "Design Patterns" classic: "Program to an interface, not an implementation."
+
+The problem with implementation inheritance is that even the smallest change to the inner details of that implementation could potentially break child classes. If the interface is public, exposed to user-land in any way, it could break code you are not even aware of.
+
+This is the reason that class hierarchies become brittle -- hard to change as you grow them with new use-cases.
+
+The common refrain is that we should be constantly refactoring our code (see Martin Fowler et al on extreme programming, agile, etc...). The key to refactor success is that you can't break things -- but as we've just seen, it's difficult to refactor a class hierarchy without breaking things.
+
+The reason is that it's impossible to create the correct class hierarchy without knowing everything you need to know about the use-cases, but you can't know that in evolving software. Use cases get added or changed in projects all the time.
+
+There is also a discovery process in programming, where you discover the right design as you implement the code and learn more about what works and what doesn't. But with class inheritance, once you get a class taxonomy going, you've painted yourself into a corner.
+
+You need to know the information before you start the implementation, but part of learning the information you need involves building the implementation. It's a catch-22.
+
+The duplication by necessity problem. This is where the death spiral really gets going. Sometimes, you really just want a banana, not the gorilla holding the banana, and the entire jungle. So you copy and paste it. Now there's a bug in a banana, so you fix it. Later, you get the same bug report and close it. "I already fixed that". And then you get the same bug report again. And again. Uh-oh. It's not fixed. You forgot the other banana! Google "copy pasta".
+
+Other times, you really need to work a new use-case into your software, but you can't change the original base class, so instead, you copy and paste the entire class hierarchy into a new one and rename all the classes you need in the hierarchy to force that new use-case into the code base. 6 months later a new dev is looking at the code and wondering which class hierarchy to inherit from and nobody can provide a good answer.
+
+Duplication by necessity leads to copy pasta messes, and pretty soon people start throwing around the word "rewrite" like it's no big deal. The problem with that is that most rewrite projects fail. I can name several orgs off the top of my head that are currently maintaining two development teams instead of one while they work on a rewrite project. I've seen such orgs cut funding to one or the other, and I've seen projects like that chew through so much cash that a startup or small business runs out of money and shuts down.
+
+Developers underestimate the impact of class inheritance all the time. It's an important choice, and you need to be aware of the trade offs you opt into every time you create or inherit from a base class.
