@@ -17,6 +17,35 @@ Public Class Y extends X{
   public void work(){
       do();
   }
-}</pre>
+}
+</pre>
+<p>ta tháy class y có kết nói mạnh với class x (inheritance). nếu class x thay đổi có thể sẽ dẫn đến class y hỏng nghiêm trọng</p>
+<p>giả sử trong tương lai ta thêm 1 method work vào class x</p>
+<pre>
+  public int work(){
+}
+</pre>
+<p>class x được thay đổi nhưng sẽ dẫn đến class y ko thể thực hiện</p>
+<p>vậy trong tương lai sẽ còn có nhiều các thay đổi ở class x mà mình không thể biết nó có dẫn tới thay đổi ở các subclass không</p>
+<br>
+<p>nên để tránh trường hợp trên ta sẽ dùng composition</p>
+<p>vẫn ví dụ trên ta sẽ thay đổi nó 1 chút </p>
+<pre>
+  public class X{
+    public void do(){
+    }
+}
+
+Public Class Y{
+    X x = new X();
+    public void work(){
+        x.do();
+    }
+}
+</pre>
+<p>ta tạo 1 reference của class x trong y class và lấy method trong x class bằng cách tạo 1 instance của class x</p>
+<p>vậy giờ class y không còn mối quan hệ ràng buộc với x. class x có thể thay đổi mà không dẫn đến thay đổi của class y</p>
+
+
 
 </div>
