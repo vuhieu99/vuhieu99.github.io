@@ -1,3 +1,4 @@
+<pre>
 Performance differences in languages. Sometimes, classes take advantage of built-in engine optimizations that dynamic compositions don't. Most of the time, this is a much smaller concern than the problems associated with class inheritance, and usually, you can inline everything you need for that performance optimization into a single class and wrap a factory function around it and get the benefits you need without a problematic class hierarchy.
 
 You should never worry about this unless you detect a problem. Then you should profile and test differences in perf to make informed tradeoffs as needed. Often, there are other performance optimizations available that don't involve class inheritance, including tricks like inlining, method delegation, memoizing pure functions, etc... Perf will vary depending on the specific application and language engine. Profiling is essential, here.
@@ -37,3 +38,4 @@ Other times, you really need to work a new use-case into your software, but you 
 Duplication by necessity leads to copy pasta messes, and pretty soon people start throwing around the word "rewrite" like it's no big deal. The problem with that is that most rewrite projects fail. I can name several orgs off the top of my head that are currently maintaining two development teams instead of one while they work on a rewrite project. I've seen such orgs cut funding to one or the other, and I've seen projects like that chew through so much cash that a startup or small business runs out of money and shuts down.
 
 Developers underestimate the impact of class inheritance all the time. It's an important choice, and you need to be aware of the trade offs you opt into every time you create or inherit from a base class.
+</pre>
