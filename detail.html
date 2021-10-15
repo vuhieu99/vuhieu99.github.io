@@ -1,5 +1,5 @@
 
-<h3>Performance differences in languages</h3>
+<h2>Performance differences in languages</h2>
 
 <p>Sometimes, classes take advantage of built-in engine optimizations that dynamic compositions don't. Most of the time, this is a much smaller concern than the problems associated with class inheritance, and usually, you can inline everything you need for that performance optimization into a single class and wrap a factory function around it and get the benefits you need without a problematic class hierarchy.
 
@@ -11,14 +11,14 @@ Conflating types with classes (there are a couple existing answers concentrate o
 
 There are three very good reasons to avoid class inheritance, and the crop up again and again:</p>
 
-<h3>The gorilla/banana problem</h3>
+<h2>The gorilla/banana problem</h2>
 
 <p>"I think the lack of reusability comes in object-oriented languages, not functional languages. Because the problem with object-oriented languages is they’ve got all this implicit environment that they carry around with them. You wanted a banana but what you got was a gorilla holding the banana and the entire jungle." ~ Joe Armstrong, quoted in "Coders at Work" by Peter Seibel.
 
 This problem basically refers to the lack of selective code reuse in class inheritance. Composition lets you select just the pieces you need by approaching software design from a "small, reusable parts" approach rather than building monolithic designs that encapsulate everything related to some given functionality.
 </p>
 
-<h3>The fragile base class problem</h3>
+<h2>The fragile base class problem</h2>
 
 <p>Class inheritance is the tightest coupling available in object-oriented design, because the base class becomes part of the implementation of the child classes. This is why you'll also hear the advice from the Gang of Four's "Design Patterns" classic: "Program to an interface, not an implementation."
 
@@ -35,7 +35,7 @@ There is also a discovery process in programming, where you discover the right d
 You need to know the information before you start the implementation, but part of learning the information you need involves building the implementation. It's a catch-22.
 </p>
 
-<h3>The duplication by necessity problem</h3>
+<h2>The duplication by necessity problem</h2>
 <p>This is where the death spiral really gets going. Sometimes, you really just want a banana, not the gorilla holding the banana, and the entire jungle. So you copy and paste it. Now there's a bug in a banana, so you fix it. Later, you get the same bug report and close it. "I already fixed that". And then you get the same bug report again. And again. Uh-oh. It's not fixed. You forgot the other banana! Google "copy pasta".
 
 Other times, you really need to work a new use-case into your software, but you can't change the original base class, so instead, you copy and paste the entire class hierarchy into a new one and rename all the classes you need in the hierarchy to force that new use-case into the code base. 6 months later a new dev is looking at the code and wondering which class hierarchy to inherit from and nobody can provide a good answer.
